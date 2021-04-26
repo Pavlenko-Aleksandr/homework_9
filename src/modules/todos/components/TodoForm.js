@@ -16,6 +16,7 @@ export default function TodoForm({ onSave }) {
                 }}>
                 <input
                 required
+                placeholder="enter new todo"
                 ref={node => (input = node)}
                 />
                 <Button
