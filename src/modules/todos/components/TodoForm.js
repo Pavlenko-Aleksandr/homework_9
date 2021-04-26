@@ -1,27 +1,32 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Button, Container } from '@material-ui/core';
+import SaveIcon from '@material-ui/icons/Save';
 
 export default function TodoForm({ onSave }) {
-    const [todo, setList] = useState({title: ''});
-
-    function onFormSubmit (e) {
-        e.preventDefault();
-        onSave(todo);
-        setList({ title: '' } );
-    };
-
-    function onInputChange(e) {
-        setList({ ...todo, [e.target.name]: e.target.value });
-    };
-
+    let input;
     return (
-        <form onSubmit={onFormSubmit}>
-            <input
-                type="text"
-                name="title"
-                value={todo.title}
-                onChange={onInputChange}
-            />
-            <button>Save</button>
-        </form>
+        <Container maxWidth="sm">
+            <form  onSubmit={e => {
+                e.preventDefault()
+                if (!input.value.trim()) {
+                return
+                }
+                onSave(input.value)
+                input.value = ''
+                }}>
+                <input
+                required
+                ref={node => (input = node)}
+                />
+                <Button
+                    variant="contained"
+                    color="primary"
+                    startIcon={<SaveIcon />}
+                    type="submit"
+                >
+                    Save
+                </Button>
+            </form>
+        </Container>
     );
 }

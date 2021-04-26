@@ -1,27 +1,40 @@
 import React from 'react';
+import { Button, TableCell, TableRow } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 
-export default function TodoListItem({ onToggle, onDelete, item }) {
+export default function TodoListItem({ onToggle, onDelete, todo }) {
     function onItemClick() {
-        onToggle(item.id);
+        onToggle(todo.id);
     };
 
     function onDeleteBtnClick(e) {
         e.stopPropagation();
-        onDelete(item.id);
+        onDelete(todo.id);
     };
 
-    function getItemStyle(completed) {
+    function getItemStyle(isDone) {
         return {
             cursor: 'pointer',
-            backgroundColor: completed ? 'green' : 'yellow',
+            backgroundColor: isDone ? 'green' : 'yellow',
         };
     };
 
     return (
-        <li onClick={onItemClick} style={getItemStyle(item.completed)}>
-            {item.title}
-            <span onClick={onDeleteBtnClick}>X</span>
-        </li>
-    );
+        <TableRow style={getItemStyle(todo.isDone)} onClick={onItemClick}>
+            <TableCell align="center" component="th" scope="row">
+                {todo.title}
+            </TableCell>
+            <TableCell align="right">
+            <Button
+                variant="contained"
+                color="secondary"
+                startIcon={<DeleteIcon />}
+                onClick={onDeleteBtnClick}>
+                Delete
+            </Button>
+            {/* <Button variant="contained" color="primary"  onClick={onDeleteBtnClick}>Delete</Button> */}
+            </TableCell>
+        </TableRow>
+    )
 }
